@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} Create sms {% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h1 class='text-center'>Create sms Using Form Below</h1>
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+          {{ field.errors }}
+          {{ field.label_tag }}
+          {{ field }}
+        </div>
+        {% endfor %}
+        
+        <input type="submit" value="send" class='btn btn-primary'>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1 class='text-center'>Welcome to Sms App !</h1>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+
+      <a
+          href="?text=True"
+          class="btn btn-{% if 'text' in request.GET %}warning{% else %}primary{% endif %}"
+          style="margin-bottom: 5px">Text
+      </a>
+    
+
+      <form class="form-inline my-2 my-lg-1">
+        <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            name='search'
+            value="{{search_term}}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+ 
+ 
+      <!--
+
+      <ul class="list-group">
+        {% for poll in polls %}
+        <li class="list-group-item">
+          <a href="{% url 'polls:detail' poll.id %}">{{ poll }}</a>
+          {% if request.user == poll.owner %}
+            <a href="{% url 'polls:edit_poll' poll.id %}" class='float-right'><i class="fas fa-pencil-alt"></i></a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      
+      
+
+      <div class="pagination">
+          <span class="step-links">
+              {% if polls.has_previous %}
+                  <a href="?page=1&{{params}}">&laquo; first</a>
+                  <a href="?page={{ polls.previous_page_number }}&{{params}}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                  Page {{ polls.number }} of {{ polls.paginator.num_pages }}.
+              </span>
+
+              {% if polls.has_next %}
+                  <a href="?page={{ polls.next_page_number }}&{{params}}">next</a>
+                  <a href="?page={{ polls.paginator.num_pages }}&{{params}}">last &raquo;</a>
+              {% endif %}
+          </span>
+      </div>
+      
+      -->
+
+    </div>
+  </div>
+</div>
+{% endblock %}

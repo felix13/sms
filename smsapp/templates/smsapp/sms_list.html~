@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2 class='text-center'>Welcome to Sms App !</h2>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <a
+          href="{% url 'smsapp:create_sms' %}"
+          class="btn btn-{% if 'text' in request.GET %}warning{% else %}primary{% endif %}"
+          style="margin-bottom: 5px">Create sms
+      </a>
+      
+      <form class="form-inline my-2 my-lg-1 float-right">
+        <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            name='search'
+            value="{{search_term}}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      
+      <table class="table table-striped mb-4">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Date</th>
+            <th>Text</th>
+            <th>To</th>
+            <th>Status</th>
+            <th>statusCode</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for sms in all_sms %}
+        <tr>
+          <td class="align-middle">{{ sms.date }} </td>
+          <td class="align-middle">{{ sms.text }}</td>
+          <td class="align-middle">{{ sms.phone }}</td>
+          <td class="align-middle">{{ sms.status }}</td>
+          <td class="align-middle">{{ sms.statusCode}}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center bg-white">No message sent, start by clicking blue button above</td>
+        </tr>
+        {% endfor %}
+       </tbody>
+      </table>
+ 
+      <!--
+
+      <div class="pagination">
+          <span class="step-links">
+              {% if polls.has_previous %}
+                  <a href="?page=1&{{params}}">&laquo; first</a>
+                  <a href="?page={{ polls.previous_page_number }}&{{params}}">previous</a>
+              {% endif %}
+
+              <span class="current">
+                  Page {{ polls.number }} of {{ polls.paginator.num_pages }}.
+              </span>
+
+              {% if polls.has_next %}
+                  <a href="?page={{ polls.next_page_number }}&{{params}}">next</a>
+                  <a href="?page={{ polls.paginator.num_pages }}&{{params}}">last &raquo;</a>
+              {% endif %}
+          </span>
+      </div>
+      
+      -->
+
+    </div>
+  </div>
+</div>
+{% endblock %}

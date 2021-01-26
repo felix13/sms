@@ -1,0 +1,74 @@
+{% load humanize %}
+{% extends 'base.html' %}
+
+{% block title %} Delivery Reports {% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class='text-center'>Welcome to Sms App !</h2> 
+  <div class="row">
+    <div class="col-md-2">
+      <div class="list-group">
+        <a href="{% url 'outbox' %}?clicked=outbox" class="list-group-item list-group-item-action {% if active == 'outbox' %}active{% endif %}">
+          Outbox
+        </a>
+        <a 
+        href="{% url 'smsapp:delivery_reports' %}?clicked=deliveryreports" 
+        class="list-group-item list-group-item-action {% if active == 'deliveryreports' %}active{% endif %} "> Delivery reports
+        </a>
+        <a href="{% url 'smsapp:inbox' %}?clicked=inbox" class="list-group-item list-group-item-action {% if active == 'inbox' %}active{% endif %}">
+        Inbox
+        </a>  
+      </div> 
+    </div>
+    <div class="col-sm-8">
+      <a
+          href="{% url 'smsapp:create_sms' %}"
+          class="btn btn-success"
+          style="margin-bottom:5px">Create sms
+      </a>
+      <table class="table table-striped mb-4">
+        <thead class="thead-inverse">
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>phoneNumber</th>
+            <th>status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for d_report in all_delivery_reports %}
+        <tr>
+          <td class="align-middle">{{ d_report.identifier }} </td>
+          <td class="align-middle">{{ d_report.date|naturaltime }}</td>
+          <td class="align-middle">{{ d_report.phoneNumber }}</td>
+          <td class="align-middle">{{ d_report.status}}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center bg-white">No delivery report yet</td>
+        </tr>
+        {% endfor %}
+       </tbody>
+      </table>
+      <div class="mx-auto" style="width:200px;">
+         <div class="pagination">
+          <span class="step-links">
+           {% if all_delivery_reports.has_previous %}
+               <a href="?page=1&clicked=deliveryreports">&laquo; first</a>
+               <a href="?page={{ all_delivery_reports.previous_page_number }}&clicked=deliveryreports">previous</a>
+           {% endif %}
+              <span class="current">
+                  Page {{ all_delivery_reports.number }} of {{ all_delivery_reports.paginator.num_pages }}.
+              </span>
+           {% if all_delivery_reports.has_next %}
+              <a href="?page={{ all_delivery_reports.next_page_number }}&clicked=deliveryreports">next</a>
+              <a href="?page={{ all_delivery_reports.paginator.num_pages }}&clicked=deliveryreports">last &raquo;</a>
+           {% endif %}
+          </span>
+        </div>
+       </div>
+     </div>
+   </div>
+</div>
+{% endblock %}

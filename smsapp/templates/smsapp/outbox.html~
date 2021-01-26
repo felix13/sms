@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %} Outbox {% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class='text-center'>Welcome to Sms App !</h2> 
+  <div class="row">
+    <div class="col-md-2">
+      <div class="list-group">
+        <a href="{% url 'outbox' %}?clicked=outbox" class="list-group-item list-group-item-action {% if active == 'outbox' %}active{% endif %}">
+          Outbox
+        </a>
+        <a 
+        href="{% url 'smsapp:delivery_reports' %}?clicked=deliveryreports" 
+        class="list-group-item list-group-item-action {% if active == 'deliveryreports' %}active{% endif %} "> Delivery reports
+        </a>
+        <a href="{% url 'smsapp:inbox' %}?clicked=inbox" class="list-group-item list-group-item-action {% if active == 'inbox' %}active{% endif %}">
+        Inbox
+        </a>   
+      </div> 
+    </div>
+    <div class="col-sm-8">
+      <a
+          href="{% url 'smsapp:create_sms' %}"
+          class="btn btn-success"
+          style="margin-bottom: 5px">Create sms
+      </a>
+      <form class="form-inline my-2 my-lg-1 float-right">
+        <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            name='search'
+            value="{{search_term}}">
+        <input type="hidden" name="clicked" value="outbox">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <table class="table table-striped mb-4">
+        <thead class="thead-inverse">
+          <tr>
+            <th>messageId</th>
+            <th>Text</th>
+            <th>To</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for sms in outbox %}
+        <tr>
+          <td class="align-middle">{{ sms.messageId }}</td>
+          <td class="align-middle">{{ sms.text|truncatechars:10 }}</td>
+          <td class="align-middle">{{ sms.phone }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center bg-white">No message sent, start by clicking the create sms button above</td>
+        </tr>
+        {% endfor %}
+       </tbody>
+      </table>
+      <div class="mx-auto" style="width:200px;">
+        <div class="pagination">
+         <span class="step-links">
+           {% if outbox.has_previous %}
+               <a href="?page=1&clicked=outbox">&laquo; first</a>
+               <a href="?page={{ outbox.previous_page_number }}&clicked=outbox">previous</a>
+           {% endif %}
+              <span class="current">
+                  Page {{ outbox.number }} of {{ outbox.paginator.num_pages }}.
+              </span>
+           {% if outbox.has_next %}
+              <a href="?page={{ outbox.next_page_number }}&clicked=outbox">next</a>
+              <a href="?page={{ outbox.paginator.num_pages }}&clicked=outbox">last &raquo;</a>
+           {% endif %}
+         </span>
+        </div>
+       </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
