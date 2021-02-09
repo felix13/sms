@@ -4,9 +4,12 @@
 ## Technology Stack
 
 - Python  3.5
+- python-decouple
 - Django == 2.2.13
 - Twitter Bootstrap 4
 
+
+Rename .env.example  to .env
 
 
 ## Running Locally
