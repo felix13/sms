@@ -10,7 +10,7 @@
 
 
 
-Rename .env.example  to .env
+**Rename .env.example  to .env**
 
 
 ## Running Locally
